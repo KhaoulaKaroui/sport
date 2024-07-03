@@ -9,12 +9,14 @@ userURL: string = 'http://localhost:3000/api/users';
   constructor( private http: HttpClient) { }
 
   //user = {email:..., pwd:.....} -----post
-login(user: any){}
+login(user: any){
+  return this.http.post<{ msg: string, role: string}>(this.userURL + '/login', user);
+}
 
 
 // user = {firstName:..., lastName:..., email:..., pwd:...}--post
 signup(user: any){
-  return this.http.post<{ isAdded: boolean}>(this.userURL, user);
+  return this.http.post<{ isAdded: boolean}>(this.userURL + '/signup', user);
 }
 
 }

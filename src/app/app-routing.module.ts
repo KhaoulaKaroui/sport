@@ -22,6 +22,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'signin', component: LoginComponent },
   { path: 'inscription', component: SignupComponent },
+  { path: 'signupAdmin', component: SignupComponent },
   { path: 'addMatch', component: AddMatchComponent },
   { path: 'addTeam', component: AddTeamComponent },
   { path: 'addPlayer', component: AddPlayerComponent },

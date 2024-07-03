@@ -10,8 +10,10 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class SignupComponent implements OnInit {
   signupForm!: FormGroup;
- 
+
   test: boolean = false;
+
+  actualPath: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -20,23 +22,26 @@ export class SignupComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.actualPath = this.router.url;
     this.signupForm = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(3)]],
       lastName: ['', [Validators.required, Validators.minLength(5)]],
       email: ['', [Validators.email, Validators.required]],
-      pwd: [
-        '',
-        [Validators.required, Validators.minLength(6), Validators.maxLength(8)]]
+      pwd: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(8)]]
     });
   }
 
   signup() {
-    console.log("here user", this.signupForm.value);
+    if (this.actualPath == '/inscription') {
+      this.signupForm.value.role = 'user';
+    } else {
+      this.signupForm.value.role = 'admin';
+    }
     this.userService.signup(this.signupForm.value).subscribe(
       (response) => {
         console.log("Here response Signup from BE", response.isAdded);
-        this.router.navigate(['signin'])
-      } 
+        this.router.navigate(['signin']);
+      }
     );
   }
 

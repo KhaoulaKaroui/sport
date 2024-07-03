@@ -5,7 +5,8 @@ const userSchema = mongoose.Schema({
     firstName: String,
     lastName: String,
     email: String,
-    pwd: String
+    pwd: String,
+    role: String
 });
 // affect name to matchSchema
 const user = mongoose.model("User" , userSchema);

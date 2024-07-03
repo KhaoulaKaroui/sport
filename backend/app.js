@@ -303,8 +303,8 @@ app.get("/api/players/:id", (req, res) => {
 
 
 //***** User */
-// Business Logic: Add User
-app.post("/api/users", (req, res) => {
+// Business Logic: Signup : Add User
+app.post("/api/users/signup", (req, res) => {
     //instructions
     console.log("Here into BL : Signup  (Add User)", req.body);
     User.findOne({ email: req.body.email }).then(
@@ -328,6 +328,38 @@ app.post("/api/users", (req, res) => {
 
 
 });
+
+
+// Business Logic: Login : 
+app.post("/api/users/login", (req, res) =>{
+console.log("Here User", req.body);
+// Check If User Exist By Email
+User.findOne({ email: req.body.email }).then(
+    (response) => {
+        console.log("Here response", response);
+        if (!response) {
+            // User Doesn't exist by Email
+            res.json({ msg: "Check Your Email" });
+        } else {
+            // User Exist ===> Compare Pwd
+            bcrypt.compare(req.body.pwd, response.pwd).then(
+                (cryptedResult) => {
+                    console.log("Here cryptedResult", cryptedResult);
+                    if (!cryptedResult) {
+                        // Pwd is Not correct
+                        res.json({ msg: "Check Your Pwd" });
+                    } else {
+                        // Pwd is Correct
+                        res.json({ msg: "Welcome", role: response.role });
+                    }
+                }
+            )
+        }
+    }
+)
+});
+
+
 
 
 
